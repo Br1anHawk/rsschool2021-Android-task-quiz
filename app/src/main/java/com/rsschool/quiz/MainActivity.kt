@@ -15,10 +15,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    override fun onBackPressed() {
-        //super.onBackPressed()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

@@ -3,16 +3,13 @@ package com.rsschool.quiz.fragmentClasses
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.ContextThemeWrapper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.appcompat.widget.TintTypedArray.obtainStyledAttributes
-import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import com.rsschool.quiz.applicationLogicClasses.Quiz
 import com.rsschool.quiz.R
@@ -37,13 +34,12 @@ class FragmentQuizQuestion : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        //context?.theme?.applyStyle(R.style.Theme_Quiz_Second, true)
         setCustomTheme(questionN % themesList.size)
         _binding = FragmentQuizQuestionBinding.inflate(layoutInflater)
-
-
-
         fillFormQuestion()
+        binding.toolbar.setOnClickListener {
+            previousQuestion(it)
+        }
         with(binding.previousButton) {
             isEnabled = questionN != 0
             setOnClickListener {
@@ -55,8 +51,8 @@ class FragmentQuizQuestion : Fragment() {
                 nextQuestion(it)
             }
         }
-        binding.toolbar.setOnClickListener {
-            previousQuestion(it)
+        requireActivity().onBackPressedDispatcher.addCallback {
+            previousQuestion(requireView())
         }
         return binding.root
     }
@@ -107,10 +103,9 @@ class FragmentQuizQuestion : Fragment() {
             nextButtonView.text = getString(R.string.button_next_text)
         }
 
-        answerOptionsGroupView.setOnCheckedChangeListener { group, checkedId ->
+        answerOptionsGroupView.setOnCheckedChangeListener { _, checkedId ->
             nextButtonView.isEnabled = true
             question.numberOfCheckedAnswerOption = checkedId
-            //Log.i("test", checkedId.toString())
         }
     }
 

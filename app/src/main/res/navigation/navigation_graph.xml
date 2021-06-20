@@ -31,5 +31,8 @@
         <action
             android:id="@+id/action_fragmentQuizResult_to_fragmentQuizQuestion"
             app:destination="@id/fragmentQuizQuestion" />
+        <action
+            android:id="@+id/action_fragmentQuizResult_to_fragmentStartQuiz"
+            app:destination="@id/fragmentStartQuiz" />
     </fragment>
 </navigation>

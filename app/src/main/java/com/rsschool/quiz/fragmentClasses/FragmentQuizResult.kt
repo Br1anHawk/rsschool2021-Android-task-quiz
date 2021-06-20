@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.rsschool.quiz.applicationLogicClasses.Quiz
 import com.rsschool.quiz.R
 import com.rsschool.quiz.applicationLogicClasses.BundleValues
@@ -54,6 +56,9 @@ class FragmentQuizResult : Fragment() {
         }
         binding.buttonExit.setOnClickListener {
             activity?.finishAndRemoveTask()
+        }
+        requireActivity().onBackPressedDispatcher.addCallback {
+            findNavController().navigate(R.id.action_fragmentQuizResult_to_fragmentStartQuiz)
         }
         return binding.root
     }
