@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Quiz</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_question_word">Question</string>
+    <string name="button_start_test">START QUIZ</string>
+    <string name="button_previous_text">PREVIOUS</string>
+    <string name="button_next_text">NEXT</string>
+    <string name="button_submit_text">SUBMIT</string>
+    <string name="button_share_text">SHARE</string>
+    <string name="button_repeat_text">REPEAT QUIZ</string>
+    <string name="button_exit_text">EXIT</string>
+    <string name="text_view_result">Your quiz result</string>
+
+    <string name="share_to_intent_subject">Quiz result</string>
+    <string name="share_to_intent_title">Share my quiz result to…</string>
+
+    <string name="text_size_for_answer_option_text">24</string>
+
 </resources>

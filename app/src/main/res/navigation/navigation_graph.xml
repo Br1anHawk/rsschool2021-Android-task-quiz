@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/fragmentStartQuiz">
+
+    <fragment
+        android:id="@+id/fragmentStartQuiz"
+        android:name="com.rsschool.quiz.fragmentClasses.FragmentStartQuiz"
+        android:label="fragment_start_quiz">
+        <action
+            android:id="@+id/action_fragmentStartQuiz_to_fragmentQuizQuestion"
+            app:destination="@id/fragmentQuizQuestion" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentQuizQuestion"
+        android:name="com.rsschool.quiz.fragmentClasses.FragmentQuizQuestion"
+        android:label="FragmentQuizQuestion">
+        <action
+            android:id="@+id/action_fragmentQuizQuestion_to_fragmentQuizResult"
+            app:destination="@id/fragmentQuizResult" />
+        <action
+            android:id="@+id/action_fragmentQuizQuestion_self"
+            app:destination="@id/fragmentQuizQuestion" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentQuizResult"
+        android:name="com.rsschool.quiz.fragmentClasses.FragmentQuizResult"
+        android:label="fragment_quiz_result">
+        <action
+            android:id="@+id/action_fragmentQuizResult_to_fragmentQuizQuestion"
+            app:destination="@id/fragmentQuizQuestion" />
+    </fragment>
+</navigation>
