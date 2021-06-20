@@ -16,13 +16,6 @@ class FragmentStartQuiz : Fragment() {
     private var _binding: FragmentStartQuizBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,7 +24,7 @@ class FragmentStartQuiz : Fragment() {
         val buttonStartQuiz = binding.buttonStartQuiz
         buttonStartQuiz.setOnClickListener {
             val bundle = Bundle()
-            quiz.shuffleAndDropAnswersOfQuestions()
+            quiz.shuffleAndSelectQuestionsForUser()
             bundle.putParcelable(QUIZ, quiz)
             it.findNavController().navigate(R.id.action_fragmentStartQuiz_to_fragmentQuizQuestion, bundle)
         }
@@ -46,13 +39,5 @@ class FragmentStartQuiz : Fragment() {
     companion object {
         private const val QUIZ = BundleValues.QUIZ
         private val quiz = Quiz()
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentStartQuiz().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

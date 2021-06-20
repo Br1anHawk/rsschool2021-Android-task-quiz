@@ -57,7 +57,6 @@ class FragmentQuizQuestion : Fragment() {
         return binding.root
     }
 
-
     @SuppressLint("RestrictedApi")
     private fun setCustomTheme(themeId: Int) {
         activity?.setTheme(themesList[themeId])
@@ -152,13 +151,5 @@ class FragmentQuizQuestion : Fragment() {
             R.style.Theme_Quiz_Fourth,
             R.style.Theme_Quiz_Fifth
         )
-
-        @JvmStatic
-        fun newInstance(questionNumber: Int) =
-            FragmentQuizQuestion().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

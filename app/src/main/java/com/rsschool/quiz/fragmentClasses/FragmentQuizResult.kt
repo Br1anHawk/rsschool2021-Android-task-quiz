@@ -44,7 +44,7 @@ class FragmentQuizResult : Fragment() {
             startActivity(Intent.createChooser(sendIntent, resources.getText(R.string.share_to_intent_title)))
         }
         binding.buttonRepeatQuiz.setOnClickListener {
-            quiz.shuffleAndDropAnswersOfQuestions()
+            quiz.shuffleAndSelectQuestionsForUser()
             val bundle = Bundle()
             bundle.putParcelable(QUIZ, quiz)
             it
@@ -78,13 +78,5 @@ class FragmentQuizResult : Fragment() {
 
     companion object {
         private const val QUIZ = BundleValues.QUIZ
-
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentQuizResult().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
     }
 }

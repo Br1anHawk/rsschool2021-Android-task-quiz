@@ -5,7 +5,8 @@ import android.os.Parcelable
 
 class Quiz() : Parcelable {
     private val questionsFromDB = mutableListOf<Question>()
-    val listOfQuestionsForUser = mutableListOf<Question>()
+    private val countOfQuestionsInQuiz = 10
+    private val listOfQuestionsForUser = mutableListOf<Question>()
 
     constructor(parcel: Parcel) : this() {
     }
@@ -151,11 +152,39 @@ class Quiz() : Parcelable {
                 "The Slytherin",
                 "The Battleship"),
             1)
-        for (question in questionsFromDB) {
-            val tempQuestion = question.copy()
-            tempQuestion.numberOfCheckedAnswerOption = null
-            listOfQuestionsForUser.add(tempQuestion)
-        }
+        addQuestionInDB("What is the rarest blood type?",  //16
+            listOf(
+                "0",
+                "A",
+                "B",
+                "AB-Negative",
+                "AB-Positive"),
+            3)
+        addQuestionInDB("How many bones are there in the human body?",  //17
+            listOf(
+                "206",
+                "205",
+                "201",
+                "209",
+                "211"),
+            0)
+        addQuestionInDB("How many hearts does an octopus have?",  //18
+            listOf(
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"),
+            2)
+        addQuestionInDB("\"Fe\" is the chemical symbol for…",  //19
+            listOf(
+                "Zinc",
+                "Hydrogen",
+                "Fluorine",
+                "Iron",
+                "Silicium"),
+            3)
+        shuffleAndSelectQuestionsForUser()
     }
 
     private fun addQuestionInDB(questionText: String, answerOptionsList: List<String>, numberOfRightAnswer: Int) {
@@ -176,20 +205,27 @@ class Quiz() : Parcelable {
     }
 
     fun getCountOfRightAnswers(): Int {
-        val tempListOfQuestionsForUser = listOfQuestionsForUser.map{ it }.sortedBy { it.id }
         var countOfRightAnswers = 0
-        tempListOfQuestionsForUser.forEach {
-            if (it.numberOfCheckedAnswerOption == questionsFromDB[it.id].numberOfCheckedAnswerOption) countOfRightAnswers++
+        listOfQuestionsForUser.forEach {
+            if (it.numberOfCheckedAnswerOption == getQuestionFromDbById(it.id).numberOfCheckedAnswerOption) {
+                countOfRightAnswers++
+            }
         }
         return countOfRightAnswers
     }
 
-    fun shuffleAndDropAnswersOfQuestions() {
-        for (question in listOfQuestionsForUser) {
-            question.numberOfCheckedAnswerOption = null
+    fun shuffleAndSelectQuestionsForUser() {
+        questionsFromDB.shuffle()
+        questionsFromDB.forEach { it.answerOptions.shuffle() }
+        listOfQuestionsForUser.clear()
+        for ((index, question) in questionsFromDB.withIndex()) {
+            if (index == countOfQuestionsInQuiz) {
+                break
+            }
+            val tempQuestion = question.copy()
+            tempQuestion.numberOfCheckedAnswerOption = null
+            listOfQuestionsForUser.add(tempQuestion)
         }
-        listOfQuestionsForUser.shuffle()
-        listOfQuestionsForUser.forEach { it.answerOptions.shuffle() }
     }
 
     private fun Double.format(digits: Int) = "%.${digits}f".format(this)
@@ -210,7 +246,7 @@ class Quiz() : Parcelable {
                 }
             }
             formattedReport.appendLine("Your answer: $userAnswerText.")
-            val questionFromDb = questionsFromDB[question.id]
+            val questionFromDb = getQuestionFromDbById(question.id)
             if (question.numberOfCheckedAnswerOption == questionFromDb.numberOfCheckedAnswerOption) {
                 formattedReport.appendLine("Right!")
             } else {
@@ -226,6 +262,15 @@ class Quiz() : Parcelable {
             formattedReport.appendLine()
         }
         return formattedReport.toString()
+    }
+
+    private fun getQuestionFromDbById(id: Int): Question {
+        for (question in questionsFromDB) {
+            if (question.id == id) {
+                return question
+            }
+        }
+        return questionsFromDB[0]
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -245,6 +290,4 @@ class Quiz() : Parcelable {
             return arrayOfNulls(size)
         }
     }
-
-
 }
